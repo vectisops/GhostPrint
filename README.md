@@ -1,16 +1,9 @@
 ```
-   ██████╗ ██╗  ██╗ ██████╗ ███████╗████████╗
-  ██╔════╝ ██║  ██║██╔═══██╗██╔════╝╚══██╔══╝
-  ██║  ███╗███████║██║   ██║███████╗   ██║   
-  ██║   ██║██╔══██║██║   ██║╚════██║   ██║   
-  ╚██████╔╝██║  ██║╚██████╔╝███████║   ██║   
-   ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝   
-  ██████╗ ██████╗ ██╗███╗   ██╗████████╗
-  ██╔══██╗██╔══██╗██║████╗  ██║╚══██╔══╝
-  ██████╔╝██████╔╝██║██╔██╗ ██║   ██║   
-  ██╔═══╝ ██╔══██╗██║██║╚██╗██║   ██║   
-  ██║     ██║  ██║██║██║ ╚████║   ██║   
-  ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   
+  ┌──────────────────┐
+  │ ▓▓ GHOSTPRINT ▓▓ │
+  │  offline · iOS   │
+  │  audit  tool     │
+  └──────────────────┘
 ```
 
 **Check if your iPhone has been hacked or is being secretly tracked — private, offline, and simple.**
@@ -21,7 +14,7 @@
 - **Technical deep dive:** [vectisops.github.io/projects/ghostprint-technical.html](https://vectisops.github.io/projects/ghostprint-technical.html)  
 - **Home:** [vectisops.github.io](https://vectisops.github.io/)
 
-GitHub repo name: `ios-security-auditor` · Product name: **Ghostprint**
+Repo: `Ghostprint` (formerly `ios-security-auditor`)
 
 ---
 
@@ -92,14 +85,16 @@ If something serious appears, the usual safest path is: save the report → remo
 sudo apt update
 sudo apt install -y libimobiledevice-utils usbmuxd python3-pip python3-venv git
 
-git clone https://github.com/vectisops/ios-security-auditor.git
-cd ios-security-auditor
+git clone https://github.com/vectisops/Ghostprint.git
+cd Ghostprint
 
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 pip install mvt
 ```
+
+*(If the rename is not done yet, use `ios-security-auditor` instead of `Ghostprint` in the URL and folder name.)*
 
 **Run a full check**
 
