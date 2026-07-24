@@ -1,8 +1,27 @@
-# iOS Security Auditor
+```
+  ██╗ ██████╗ ███████╗
+  ██║██╔═══██╗██╔════╝
+  ██║██║   ██║███████╗
+  ██║██║   ██║╚════██║
+  ██║╚██████╔╝███████║
+  ╚═╝ ╚═════╝ ╚══════╝
+   ███████╗███████╗ ██████╗██╗   ██╗██████╗ ██╗████████╗██╗   ██╗
+   ██╔════╝██╔════╝██╔════╝██║   ██║██╔══██╗██║╚══██╔══╝╚██╗ ██╔╝
+   ███████╗█████╗  ██║     ██║   ██║██████╔╝██║   ██║    ╚████╔╝
+   ╚════██║██╔══╝  ██║     ██║   ██║██╔══██╗██║   ██║     ╚██╔╝
+   ███████║███████╗╚██████╗╚██████╔╝██║  ██║██║   ██║      ██║
+   ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝   ╚═╝      ╚═╝
+            █████╗ ██╗   ██╗██████╗ ██╗████████╗ ██████╗ ██████╗
+           ██╔══██╗██║   ██║██╔══██╗██║╚══██╔══╝██╔═══██╗██╔══██╗
+           ███████║██║   ██║██║  ██║██║   ██║   ██║   ██║██████╔╝
+           ██╔══██║██║   ██║██║  ██║██║   ██║   ██║   ██║██╔══██╗
+           ██║  ██║╚██████╔╝██████╔╝██║   ██║   ╚██████╔╝██║  ██║
+           ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+```
 
-**A simple tool that checks whether an iPhone shows signs of being hacked, tracked, or infected with spyware.**
+**Check if your iPhone has been hacked or is being secretly tracked — private, offline, and simple.**
 
-This tool runs completely on your own computer (preferably a Linux machine). It never sends your data to the cloud or to any company. Everything stays private and under your control.
+This tool runs completely on your own computer. It never sends your data anywhere. Everything stays private and under your control.
 
 ---
 
