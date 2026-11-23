@@ -1,164 +1,109 @@
-```
-  ██████╗ ██╗  ██╗
- ██╔════╝ ██║  ██║
- ██║  ███╗███████║
- ██║   ██║██╔══██║
- ╚██████╔╝██║  ██║
-  ╚═════╝ ╚═╝  ╚═╝
- ██████╗ ██████╗ 
- ██╔══██╗██╔══██╗
- ██████╔╝██████╔╝
- ██╔═══╝ ██╔══██╗
- ██║     ██║  ██║
- ╚═╝     ╚═╝  ╚═╝
-```
+   ____ _               _   ____       _        
+  / ___| |__   ___  ___| |_|  _ \ _ __(_)_ __
+ | |  _| '_ \ / _ \/ __| __| |_) | '__| | '_ 
+ | |_| | | | | (_) \__ \ |_|  __/| |  | | | |
+  \____|_| |_|\___/|___/\__|_|   |_|  |_|_| |
+╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝   ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝
 
-**Check if your iPhone has been hacked or is being secretly tracked — private, offline, and simple.**
+**Check iPhones, iPads, and Macs for spyware, tracking, or suspicious activity — private, offline, and GUI-first.**
 
-**Ghostprint** runs completely on **your own computer**. It never uploads your phone data to a company cloud. Everything stays under your control.
+**GhostPrint** runs on **your own computer** with a guided visual interface designed for non-technical users. It keeps inspection offline and isolated so your device data isn't sent to third-party cloud services.
 
 - **Portfolio (plain guide):** [vectisops.github.io/projects/ghostprint.html](https://vectisops.github.io/projects/ghostprint.html)  
 - **Technical deep dive:** [vectisops.github.io/projects/ghostprint-technical.html](https://vectisops.github.io/projects/ghostprint-technical.html)  
-- **Home:** [vectisops.github.io](https://vectisops.github.io/)
-
-Repo: `Ghostprint` (formerly `ios-security-auditor`)
-
----
-
-## What is this, in everyday language?
-
-Most “phone security” apps either want an account, send data to the internet, or only look for ordinary viruses. Serious spyware is different — it can leave quiet digital fingerprints that ordinary antivirus never sees.
-
-Ghostprint is a **private checking tool**. You plug your iPhone into a computer with a USB cable. Ghostprint makes a careful backup copy, then searches that copy for known spyware fingerprints, odd remote-control settings, and suspicious apps. At the end you get a report written so a non-technical person can understand the important parts.
+- **Home:** [vectisops.github.io](https://vectisops.github.io/)  
+- **Repository:** [github.com/vectisops/GhostPrint](https://github.com/vectisops/GhostPrint)
 
 ---
 
-## Main features
+## What Is GhostPrint, in Everyday Language?
 
-| Feature | What it means for you |
-|--------|------------------------|
-| **USB connection** | Works like a normal computer backup — unlock phone, tap Trust |
-| **Full backup scan** | Examines a copy of the phone’s data, not the live phone while you use it |
-| **Spyware fingerprint search** | Uses Amnesty International’s free MVT engine, which knows many commercial spyware families |
-| **Settings / profile check** | Looks for unknown “management” profiles that can give someone remote control |
-| **App name heuristics** | Flags apps whose names look like tracking or spy tools |
-| **Plain report** | Markdown report you can open in any text editor, plus a JSON file for technical use |
-| **Offline after install** | No phone-home; no required cloud account |
-| **Isolation-friendly** | Designed to run on a dedicated Linux machine, VM, or clean user account |
+Most "phone cleaner" or security apps demand accounts, send telemetry to external servers, or only look for basic viruses. Targeted spyware, stalkerware, and covert tracking often leave subtle traces that ordinary antivirus misses.
+
+GhostPrint is a **guided local checking tool** with a visual desktop interface:
+1. **Checks your host Mac first** before pulling data from another device, helping ensure your starting computer is in good shape.
+2. **Inspects connected iPhones or iPads** (via USB backup/diagnostics) or **Macs** (MacBook / iMac) for spyware indicators, unauthorized remote-management profiles, trackers, and suspicious items.
+3. **Runs analysis inside an isolated container** (`--network=none`, read-only root where supported) so untrusted files from a suspect device stay contained.
+4. **Uses a local LLM (via Ollama)** to summarize findings in plain English—highlighting **first and foremost** whether tracking, spyware, or malware indicators were detected, alongside practical optimization and cleanup advice.
 
 ---
 
-## Who it is for / typical uses
+## Key Capabilities
 
-- **Anyone worried their iPhone may have been compromised** after a suspicious event, shared device, or strange behaviour
-- **Journalists, activists, and higher-risk users** who need a private check without commercial cloud tools
-- **People who refuse “phone cleaner” apps** that demand accounts and internet access
-- **Technical helpers** assisting a friend or family member (with permission) who want a structured starting point
-
-**It is not** a magic guarantee the phone is perfectly clean, a real-time monitor, or an automatic “fix” button.
+| Area | What GhostPrint Does |
+|------|---------------------|
+| **Guided macOS GUI** | Step-by-step visual screens, one-click setup/scan controls, and plain-language status badges—no terminal expertise required for everyday use. |
+| **Host Pre-Check Gate** | Optional/automatic startup check on the host Mac (SIP, Gatekeeper, profiles, startup items) before cloning or inspecting data from another device. |
+| **Sandboxed Inspection** | Runs backup/log parsing inside a locked-down, network-isolated container environment so suspicious artifacts cannot freely execute on the host. |
+| **iPhone & iPad Support** | Inspects iOS and iPadOS backups (including encrypted backup support) and diagnostic/log archives using Amnesty International's **Mobile Verification Toolkit (MVT)** plus profile/app/tracker checks. |
+| **iMac & MacBook Support** | Checks macOS persistence (LaunchAgents/LaunchDaemons), MDM/configuration profiles, privacy permissions, code signing, and listening network endpoints. |
+| **Expanded Threat & Tracker Checks** | Combines multi-source STIX2 spyware indicators with configuration-profile checks, suspicious app/bundle heuristics, tracker/telemetry domain checks, and anomaly flags. |
+| **Local LLM Triage & Optimization** | Uses a local Ollama model to deliver a clear priority verdict on **tracking, spyware, or malware**, sanity-check potential false positives, and suggest safe system/privacy optimizations. |
 
 ---
 
-## What it can and cannot do
+## Priority Triage: Tracking, Spyware & Malware First
 
-**Can help find**
-- Known commercial spyware families (including some linked to high-end tools such as Pegasus)
-- Unexpected remote-management / configuration profiles
-- Roughly suspicious app names
+GhostPrint is designed so you don't have to wade through raw logs just to know what matters most:
+
+- **Top Priority Verdict:** Clearly states whether **spyware, tracking, or malware indicators** were detected, how confident the check is, and what to look at first.
+- **Confirmed Indicators vs. Anomalies:** Separates known indicator matches and risky remote-control/profile findings from general anomalies or tracker warnings that may simply need a closer look.
+- **Optimization & Cleanup Advice:** Offers plain-English recommendations for decluttering startup items, reviewing background services or permissions, and keeping devices tidy.
+
+---
+
+## What GhostPrint Can and Cannot Do
+
+**Can help with**
+- Checking iPhones, iPads, and Macs for known spyware indicators (via MVT STIX2 feeds)
+- Spotting unexpected MDM / configuration profiles, suspicious apps/identifiers, and tracker patterns
+- Giving non-technical users a structured starting point, plain report, and local AI summary
 
 **Cannot**
-- Guarantee 100% cleanliness (brand-new spyware with no public fingerprints is hard to catch)
-- Watch the phone live while you use it
-- Automatically remove infection
-- Work if the phone stays locked and never trusts the computer
+- Guarantee a device is 100% clean or catch brand-new zero-day spyware with no public indicators
+- Monitor a live device continuously in real time
+- Automatically remove deep compromises or bypass device passcodes/encryption
 
-If something serious appears, the usual safest path is: save the report → remove unknown profiles → change Apple ID password from another device → consider erase and set up as **new** (do not restore from a suspect backup).
-
----
-
-## Safety notes (please read)
-
-1. Only check phones you **own** or have **clear permission** to examine.  
-2. Prefer a **clean computer** you do not use for banking or everyday email.  
-3. **Unlock** the phone and tap **Trust**.  
-4. Backups can take **30–90+ minutes** — leave the phone charged and connected.  
-5. Keep **iOS updated**; many attacks are fixed by updates alone.
+> **If something serious is flagged:** Preserve your report, avoid making hasty changes that destroy evidence, remove unauthorized profiles only after reviewing what they are, change passwords from a known-clean device, and consider a clean erase & setup as **new** (without restoring from a suspect backup) or seek specialist digital-security help.
 
 ---
 
-## Quick setup (Ubuntu / Debian-style Linux)
+## Safety & Consent Rules
 
+1. **Only scan devices you own or have explicit, informed permission to examine.** Unauthorised access or inspection of another person's device may be unlawful.
+2. **Unlock iPhones/iPads and tap "Trust"** when prompted on the device screen.
+3. **Encrypted backups matter:** An encrypted backup on iOS/iPadOS includes sensitive forensic records that unencrypted backups omit—keep track of your backup password if using one.
+4. **Allow time for full backups:** Large backups can take 30–90+ minutes depending on storage size and cable speed; keep devices powered and connected.
+5. **Keep operating systems updated:** Regular iOS, iPadOS, and macOS updates patch known vulnerabilities.
+
+---
+
+## Getting Started (macOS GUI Workflow)
+
+### 1. Clone & Set Up
 ```bash
-sudo apt update
-sudo apt install -y libimobiledevice-utils usbmuxd python3-pip python3-venv git
+git clone [https://github.com/vectisops/GhostPrint.git](https://github.com/vectisops/GhostPrint.git)
+cd GhostPrint
 
-git clone https://github.com/vectisops/Ghostprint.git
-cd Ghostprint
-
+Run the setup script or launch the GUI setup wizard to install system/Python dependencies (pywebview, mvt, libimobiledevice / pymobiledevice3 as configured for your setup) and download initial spyware indicator sets:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-pip install mvt
-```
 
-*(If the rename is not done yet, use `ios-security-auditor` instead of `Ghostprint` in the URL and folder name.)*
+2. Launch the GUI
+python gui/app.py
 
-**Run a full check**
+3. Typical Guided Flow in the App
+ * Setup / Readiness Check: Confirms required tools, container runtime, indicator files, and optional local Ollama LLM availability.
+ * Host Mac Pre-Check: Optionally scans the host Mac first so you know your starting machine is clean before pulling data from another device.
+ * Select & Scan Target: Connect an iPhone/iPad via USB (and trust the computer) or scan a Mac / imported log bundle inside the isolated container.
+ * Review Priority Report & Optimizations: Read the top-level tracking/spyware/malware assessment, inspect detailed findings, and export a summary report.
+(Existing CLI workflows such as auditor.py can still be maintained alongside the GUI for scripted or headless use.)
+Privacy & Offline Operation
+GhostPrint is built to stay offline-first on your own hardware. Network access is only needed when initially installing dependencies, updating indicator feeds, or pulling a local LLM model—inspections themselves can run offline and inside a restricted container.
+Credits & Licence
+ * Amnesty International's Mobile Verification Toolkit (MVT) — mobile forensic analysis and indicator matching engine.
+ * libimobiledevice / pymobiledevice3 & pywebview — device communication and lightweight desktop webview rendering.
+ * Licence: MIT (subject to upstream tool licenses and consensual-use rules, including MVT's consensual-use terms).
+Vectis Ops: vectisops.github.io · GitHub @vectisops
 
-```bash
-python auditor.py scan --output reports/
-```
-
-**Other commands**
-
-| Command | What it does |
-|---------|--------------|
-| `python auditor.py info` | Phone name, iOS version, serial, etc. |
-| `python auditor.py apps` | List apps; flag suspicious names |
-| `python auditor.py profiles` | Search existing backups for profiles |
-
----
-
-## Understanding the report
-
-- **MVT / Spyware IOC Results** — “IOCs detected: YES” means known spyware fingerprints were found. Treat seriously.  
-- **Configuration Profiles** — anything you do not recognise (MDM, Management, Remote, VPN) deserves a look under **Settings → General → VPN & Device Management**.  
-- **Suspicious Apps** — name-based warnings only; not proof of guilt.  
-- **Recommendations** — practical next steps at the end of every report.
-
----
-
-## Future plans
-
-These are directions, not promises with dates:
-
-- Clearer “traffic light” summary at the top of every report (green / amber / red in plain language)
-- Better handling of **encrypted** backups with guided password steps
-- Optional one-command install scripts for common Linux distros
-- Container / Podman recipes so the whole tool runs in an isolated box by default
-- Expanded profile detection for newer iOS backup layouts
-- Small companion notes for high-risk users (what to do after a bad finding)
-- Keep everything offline-first — no cloud dependency will be added as a requirement
-
----
-
-## Privacy & legal
-
-Ghostprint does not phone home. After dependencies are installed, it can run offline.  
-**Consensual use only** — you must own the device or have explicit permission. Unauthorised examination of someone else’s phone may be a criminal offence.
-
----
-
-## Credits
-
-- **libimobiledevice** — lets Linux talk to iPhones  
-- **Amnesty International’s Mobile Verification Toolkit (MVT)** — spyware detection engine  
-- Built so ordinary people can check their own devices without commercial cloud services
-
-## Licence
-
-MIT — free to use, modify, and share.
-
----
-
-**More from Vectis Ops:** [vectisops.github.io](https://vectisops.github.io/) · [GitHub @vectisops](https://github.com/vectisops)
