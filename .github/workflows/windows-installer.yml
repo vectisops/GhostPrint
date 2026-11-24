@@ -23,8 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt pyinstaller
       - name: Run tests
-        shell: cmd
-        run: python -m unittest discover -s tests -v
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Continue"
+          python -m unittest discover -s tests -v 2>&1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Package GhostPrint and MVT
         shell: pwsh
         run: ./platforms/windows/build.ps1
