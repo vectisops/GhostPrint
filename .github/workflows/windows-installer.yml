@@ -23,19 +23,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt pyinstaller
       - name: Run tests
-        shell: pwsh
-        run: |
-          $stdout = Join-Path $env:RUNNER_TEMP "ghostprint-tests.stdout.log"
-          $stderr = Join-Path $env:RUNNER_TEMP "ghostprint-tests.stderr.log"
-          $testProcess = Start-Process -FilePath "python" `
-            -ArgumentList @("-m", "unittest", "discover", "-s", "tests", "-v") `
-            -Wait -PassThru -NoNewWindow `
-            -RedirectStandardOutput $stdout -RedirectStandardError $stderr
-          if (Test-Path $stdout) { Get-Content $stdout }
-          if (Test-Path $stderr) { Get-Content $stderr }
-          if ($testProcess.ExitCode -ne 0) {
-            throw "Unit tests exited with code $($testProcess.ExitCode)."
-          }
+        shell: bash
+        run: python -m unittest discover -s tests -v
       - name: Package GhostPrint and MVT
         shell: pwsh
         run: ./platforms/windows/build.ps1
