@@ -19,3 +19,4 @@ backups/
 .vscode/
 *.sqlite
 *.db
+*.spec

@@ -1,114 +1,77 @@
-  ____ _               _   
- / ___| |__   ___  ___| |_ 
-| |  _| '_ \ / _ \/ __| __|
-| |_| | | | | (_) \__ \ |_ 
- \____|_| |_|\___/|___/\__|
- ____       _       _   
-|  _ \ _ __(_)_ __ | |_ 
-| |_) | '__| | '_ \| __|
-|  __/| |  | | | | | |_ 
-|_|   |_|  |_|_| |_|\__|
+# GhostPrint
 
+GhostPrint is a local-first, guided desktop tool for reviewing iPhone and iPad backups with Amnesty International's Mobile Verification Toolkit (MVT). The current GUI targets Windows and uses a restrained cyberpunk-dark palette; the existing command-line auditor remains available for scripted use.
 
-**Check iPhones, iPads, and Macs for spyware, tracking, or suspicious activity — private, offline, and GUI-first.**
+## Start here
 
-**GhostPrint** runs on **your own computer** with a guided visual interface designed for non-technical users. It keeps inspection offline and isolated so your device data isn't sent to third-party cloud services.
+- **Windows users:** Read the [Windows installation and first-scan guide](platforms/windows/INSTALLATION.txt). The shareable download ZIP contains the installer and guide; no Python or terminal is required.
+- **iPhone/iPad support:** See [iOS and iPadOS backup scanning](platforms/ios/README.md). GhostPrint runs on a computer; it is not an iPhone/iPad app.
+- **Linux:** Check [Linux package status](platforms/linux/README.md); a one-click desktop package is not yet available.
+- **Contributors:** Shared code is in `gui.py` and `modules/`, tests are in `tests/`, and Windows packaging is under `platforms/windows/`.
 
-- **Portfolio (plain guide):** [vectisops.github.io/projects/ghostprint.html](https://vectisops.github.io/projects/ghostprint.html)  
-- **Technical deep dive:** [vectisops.github.io/projects/ghostprint-technical.html](https://vectisops.github.io/projects/ghostprint-technical.html)  
-- **Home:** [vectisops.github.io](https://vectisops.github.io/)  
-- **Repository:** [github.com/vectisops/GhostPrint](https://github.com/vectisops/GhostPrint)
+## Windows GUI
 
----
+The **Windows installer** GitHub Actions workflow builds `GhostPrint-Windows-Download.zip`, containing `GhostPrint-Setup.exe` and a plain-language first-scan guide. When a version is released, download this ZIP from the public GitHub Releases page or share it directly with a recipient. The installer includes the GUI and MVT scanner, so users do not need a GitHub account, Python, or terminal commands.
 
-## What Is GhostPrint, in Everyday Language?
+1. Connect the iPhone or iPad to the PC, unlock it, and trust the computer.
+2. In Apple Devices or iTunes, make a local backup. The current GUI does not collect an encrypted-backup password; use a backup MVT can open without one, or use the legacy CLI workflow for password-protected backups.
+3. In GhostPrint, choose the completed backup folder and scan it. GhostPrint does not create backups using an unsupported Apple API.
 
-Most "phone cleaner" or security apps demand accounts, send telemetry to external servers, or only look for basic viruses. Targeted spyware, stalkerware, and covert tracking often leave subtle traces that ordinary antivirus misses.
+The app also supports an optional, read-only Windows host inventory: Microsoft Defender real-time-protection status and common `Run`/`RunOnce` registry entries. This is an inventory, **not an antivirus scan or malware verdict**.
 
-GhostPrint is a **guided local checking tool** with a visual desktop interface:
-1. **Checks your host Mac first** before pulling data from another device, helping ensure your starting computer is in good shape.
-2. **Inspects connected iPhones or iPads** (via USB backup/diagnostics) or **Macs** (MacBook / iMac) for spyware indicators, unauthorized remote-management profiles, trackers, and suspicious items.
-3. **Runs analysis inside an isolated container** (`--network=none`, read-only root where supported) so untrusted files from a suspect device stay contained.
-4. **Uses a local LLM (via Ollama)** to summarize findings in plain English—highlighting **first and foremost** whether tracking, spyware, or malware indicators were detected, alongside practical optimization and cleanup advice.
+## Platform folders and downloads
 
----
+- [`platforms/windows`](platforms/windows) contains the supported Windows installer build and host workflow.
+- [`platforms/ios`](platforms/ios) describes iPhone/iPad backup scanning as a **device target**; it is not a native iOS app.
+- [`platforms/linux`](platforms/linux) records Linux package status; a first-class Linux desktop distribution is not yet available.
 
-## Key Capabilities
+Shared Python source stays at the repository root to avoid divergent copies. The platform folders hold packaging and guidance. A GitHub source ZIP always contains the whole repository, not a single folder; use the Windows download ZIP when you only need the installer and guide.
 
-| Area | What GhostPrint Does |
-|------|---------------------|
-| **Guided macOS GUI** | Step-by-step visual screens, one-click setup/scan controls, and plain-language status badges—no terminal expertise required for everyday use. |
-| **Host Pre-Check Gate** | Optional/automatic startup check on the host Mac (SIP, Gatekeeper, profiles, startup items) before cloning or inspecting data from another device. |
-| **Sandboxed Inspection** | Runs backup/log parsing inside a locked-down, network-isolated container environment so suspicious artifacts cannot freely execute on the host. |
-| **iPhone & iPad Support** | Inspects iOS and iPadOS backups (including encrypted backup support) and diagnostic/log archives using Amnesty International's **Mobile Verification Toolkit (MVT)** plus profile/app/tracker checks. |
-| **iMac & MacBook Support** | Checks macOS persistence (LaunchAgents/LaunchDaemons), MDM/configuration profiles, privacy permissions, code signing, and listening network endpoints. |
-| **Expanded Threat & Tracker Checks** | Combines multi-source STIX2 spyware indicators with configuration-profile checks, suspicious app/bundle heuristics, tracker/telemetry domain checks, and anomaly flags. |
-| **Local LLM Triage & Optimization** | Uses a local Ollama model to deliver a clear priority verdict on **tracking, spyware, or malware**, sanity-check potential false positives, and suggest safe system/privacy optimizations. |
+## Backup and privacy handling
 
----
+- The original Apple backup is never edited. GhostPrint rejects backup trees containing symbolic links or unsupported special files, then copies the selected backup into an app-managed temporary workspace before analysis.
+- Temporary backup copies and detailed MVT output are removed when the app closes or when **Purge temporary data now** is used. If the app or system stops unexpectedly, a later launch attempts to remove abandoned GhostPrint workspaces.
+- Temporary storage is not RAM-only. SSD wear-leveling, Windows, filesystem snapshots, backup software, or other system features may retain data; deletion is **not guaranteed secure erasure**.
+- The optional saved summary contains source names and aggregate match counts, not the backup path or raw MVT findings. It is only written when the user explicitly saves it.
+- The app refreshes MVT's Amnesty indicator data and any additional HTTPS STIX2 feeds configured by the user. Feed URLs and public indicators are stored locally; backup contents are not sent to feed providers. Only configure indicator sources you trust.
+- An unavailable feed is shown as stale or not updated. GhostPrint can use a previously cached additional feed, but MVT does not report its indicator count through the updater.
 
-## Priority Triage: Tracking, Spyware & Malware First
+## Indicator and scan limitations
 
-GhostPrint is designed so you don't have to wade through raw logs just to know what matters most:
+GhostPrint runs MVT's normal backup scan and, separately, scans each configured STIX2 indicator feed. Additional feeds must be direct HTTPS URLs serving a STIX2 bundle with indicator objects; add them in the GUI. No default third-party feed is bundled. Feed coverage and quality vary, and generic feeds are not necessarily mobile-specific.
 
-- **Top Priority Verdict:** Clearly states whether **spyware, tracking, or malware indicators** were detected, how confident the check is, and what to look at first.
-- **Confirmed Indicators vs. Anomalies:** Separates known indicator matches and risky remote-control/profile findings from general anomalies or tracker warnings that may simply need a closer look.
-- **Optimization & Cleanup Advice:** Offers plain-English recommendations for decluttering startup items, reviewing background services or permissions, and keeping devices tidy.
+A match is a lead for human review, not confirmation of compromise. A scan with no matches does not prove a device is clean. Coverage is limited by the backup contents, supported MVT modules, the selected indicator feeds, and what is publicly known. GhostPrint does not infer a confidence score or remove profiles, apps, or other data.
 
----
+## Windows Support & Verification
 
-## What GhostPrint Can and Cannot Do
+Windows 11 validation covered the GUI and bundled MVT executable; GUI and MVT smoke checks passed, along with 14 automated tests. A Windows run loaded 11,494 STIX2 indicators from a locally staged cache.
 
-**Can help with**
-- Checking iPhones, iPads, and Macs for known spyware indicators (via MVT STIX2 feeds)
-- Spotting unexpected MDM / configuration profiles, suspicious apps/identifiers, and tracker patterns
-- Giving non-technical users a structured starting point, plain report, and local AI summary
+In a blind check of two anonymized backup copies, one produced 3 MVT alerts, each with a matched indicator, and the other produced 0 alerts. GhostPrint's results agreed with direct MVT output, and the counts remained the same after changing only the opaque parent-directory names. Internal backup structure was preserved for scanning. These results validate the tested scan path, not a false-positive rate or the ground-truth cleanliness of the zero-alert backup.
 
-**Cannot**
-- Guarantee a device is 100% clean or catch brand-new zero-day spyware with no public indicators
-- Monitor a live device continuously in real time
-- Automatically remove deep compromises or bypass device passcodes/encryption
+## Interpreting Scan Results
 
-> **If something serious is flagged:** Preserve your report, avoid making hasty changes that destroy evidence, remove unauthorized profiles only after reviewing what they are, change passwords from a known-clean device, and consider a clean erase & setup as **new** (without restoring from a suspect backup) or seek specialist digital-security help.
+> **Important:** Zero alerts means only that this scan reported no matching known indicators in the artifacts MVT could inspect. It does **not** guarantee that a device is clean or free of spyware.
 
----
+- **Known-indicator limits:** MVT checks known indicators using its supported modules. New, undocumented, or unmatched threats may not trigger alerts, and indicators may not cover every relevant artifact.
+- **Backup scope:** An iOS backup does not contain the entire filesystem, volatile memory, or all system logs. GhostPrint currently scans iTunes backup folders; it does not ingest or analyze `sysdiagnose` archives. Those require separate tools and review.
+- **Network and privacy:** MVT analyzes the selected local backup copy, but refreshing indicators invokes MVT's downloader and fetches any configured HTTPS STIX2 feeds, so GhostPrint is not offline-only by default. GhostPrint's feed requests retrieve indicator data and do not include backup contents or scan results; this repository has no backup/result upload workflow.
 
-## Safety & Consent Rules
+## Development
 
-1. **Only scan devices you own or have explicit, informed permission to examine.** Unauthorised access or inspection of another person's device may be unlawful.
-2. **Unlock iPhones/iPads and tap "Trust"** when prompted on the device screen.
-3. **Encrypted backups matter:** An encrypted backup on iOS/iPadOS includes sensitive forensic records that unencrypted backups omit—keep track of your backup password if using one.
-4. **Allow time for full backups:** Large backups can take 30–90+ minutes depending on storage size and cable speed; keep devices powered and connected.
-5. **Keep operating systems updated:** Regular iOS, iPadOS, and macOS updates patch known vulnerabilities.
+The GUI uses Python's built-in Tkinter. For a source checkout, install `requirements.txt` and run `python gui.py` from a Python environment with MVT installed. On a Windows runner, `platforms/windows/build.ps1` packages the GUI and MVT with PyInstaller; the workflow uses Inno Setup to create the installer and attaches it to `v*` GitHub Releases.
 
----
+The legacy CLI is in `auditor.py`:
 
-## Getting Started (macOS GUI Workflow)
+```text
+python auditor.py --help
+```
 
-### 1. Clone & Set Up
-```bash
-git clone [https://github.com/vectisops/GhostPrint.git](https://github.com/vectisops/GhostPrint.git)
-cd GhostPrint
+## Useful follow-on work
 
-Run the setup script or launch the GUI setup wizard to install system/Python dependencies (pywebview, mvt, libimobiledevice / pymobiledevice3 as configured for your setup) and download initial spyware indicator sets:
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+These are not current capabilities: Apple-supported in-app backup creation, richer per-finding severity/provenance and evidence views, additional curated mobile-focused indicator sources, and deeper Windows persistence coverage. The current workflow deliberately guides users through Apple Devices/iTunes instead of automating undocumented backup operations.
 
-2. Launch the GUI
-python gui/app.py
+## Credits and safe use
 
-3. Typical Guided Flow in the App
- * Setup / Readiness Check: Confirms required tools, container runtime, indicator files, and optional local Ollama LLM availability.
- * Host Mac Pre-Check: Optionally scans the host Mac first so you know your starting machine is clean before pulling data from another device.
- * Select & Scan Target: Connect an iPhone/iPad via USB (and trust the computer) or scan a Mac / imported log bundle inside the isolated container.
- * Review Priority Report & Optimizations: Read the top-level tracking/spyware/malware assessment, inspect detailed findings, and export a summary report.
-(Existing CLI workflows such as auditor.py can still be maintained alongside the GUI for scripted or headless use.)
-Privacy & Offline Operation
-GhostPrint is built to stay offline-first on your own hardware. Network access is only needed when initially installing dependencies, updating indicator feeds, or pulling a local LLM model—inspections themselves can run offline and inside a restricted container.
-Credits & Licence
- * Amnesty International's Mobile Verification Toolkit (MVT) — mobile forensic analysis and indicator matching engine.
- * libimobiledevice / pymobiledevice3 & pywebview — device communication and lightweight desktop webview rendering.
- * Licence: MIT (subject to upstream tool licenses and consensual-use rules, including MVT's consensual-use terms).
-Vectis Ops: vectisops.github.io · GitHub @vectisops
-
+- [Mobile Verification Toolkit](https://github.com/mvt-project/mvt) by Amnesty International and contributors.
+- Use only on devices and backups you own or have explicit permission to examine.
+- GhostPrint is provided as an investigative aid, not a guarantee of safety or a substitute for specialist advice.

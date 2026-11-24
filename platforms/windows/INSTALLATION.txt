@@ -1,0 +1,82 @@
+GHOSTPRINT FOR WINDOWS
+Installation and first scan
+==========================
+
+WHAT YOU NEED
+-------------
+- A Windows 11 64-bit PC. This is the Windows version tested by the project.
+- An iPhone or iPad backup made on this PC with Apple Devices or iTunes.
+- Internet access when refreshing MVT indicators and any optional feeds.
+
+You do not need Python, a terminal, or a GitHub account to install GhostPrint.
+The download ZIP contains the installer and this guide.
+
+INSTALL GHOSTPRINT
+------------------
+1. Download GhostPrint-Windows-Download.zip from a trusted source.
+2. In File Explorer, right-click the ZIP and choose "Extract All".
+3. Open the extracted folder and double-click GhostPrint-Setup.exe.
+4. Follow the installer prompts. The app installs for your Windows account.
+5. Start GhostPrint from the Start menu or the optional desktop shortcut.
+
+The installer may not be signed by a commercial publisher. If Windows shows a
+security warning, verify where the ZIP came from before deciding whether to
+continue. Do not turn off Windows security protections to install it.
+
+CREATE AN IPHONE OR IPAD BACKUP
+-------------------------------
+1. Connect the device to the PC, unlock it, and tap "Trust" if asked.
+2. Open Apple Devices or iTunes and select the device.
+3. Choose a backup to this computer and start the backup. Wait for it to finish.
+   The exact button names can vary between Apple Devices and iTunes.
+4. Keep the backup private; it can contain personal information.
+
+GhostPrint does not create device backups itself. The current GUI cannot ask
+for an encrypted-backup password. Use a backup MVT can open without a password;
+do not change the protection on an existing backup just to scan it.
+
+RUN YOUR FIRST SCAN
+-------------------
+1. Open GhostPrint and choose the completed iPhone/iPad backup folder.
+   Select the backup itself, not a parent folder. A supported backup contains
+   Manifest.db or Manifest.plist.
+2. Wait for the indicator refresh and select "Scan selected backup".
+3. Review any reported matches. An alert is a lead to investigate, not proof
+   that a device is compromised.
+
+No alerts does not prove a device is clean. GhostPrint can only check the
+backup contents, MVT modules, and indicators available to that scan.
+
+PRIVACY AND NETWORK USE
+-----------------------
+- The original backup is not modified. GhostPrint scans a working copy.
+- Indicator refresh downloads MVT's public indicators and any HTTPS feeds you
+  have configured. An internet connection may be needed for current data.
+  If refresh fails, the indicator status may be stale.
+- Backup parsing and matching use local files. GhostPrint does not upload the
+  selected backup or scan report as part of its workflow.
+- Temporary working copies and detailed scan output are removed when the app
+  closes normally. You can also use "Purge temporary data now". File deletion
+  is not guaranteed secure erasure on SSDs or through Windows backups/snapshots.
+- Apple-device backups remain where Apple Devices/iTunes created them. Remove
+  those separately if you no longer need them.
+
+TROUBLESHOOTING
+---------------
+- The main window shows live copy/scan progress and the final scan summary.
+  If a scan fails, it displays shortened scanner details while the window is
+  open. Note the message before closing; GhostPrint has no full-log file or
+  full-log export.
+- "Save summary" exports aggregate results only, not raw findings. Detailed
+  MVT output stays in temporary storage and is removed on app close or purge.
+- "This folder does not look like a backup": select the folder containing
+  Manifest.db or Manifest.plist, and wait until Apple Devices/iTunes finishes.
+- Encrypted backup: the current GUI does not request its password. Select a
+  backup MVT can open without one.
+- Indicator refresh unavailable: check your internet connection. Do not assume
+  cached indicators are current when the app reports an update problem.
+- A finding needs review: preserve the report and ask a qualified digital
+  security professional before changing or deleting evidence.
+
+GhostPrint does not scan live iPhones/iPads or sysdiagnose archives. Its
+Windows host inventory is a read-only status check, not an antivirus verdict.
